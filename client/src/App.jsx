@@ -10,10 +10,13 @@ import Shop from './components/shop/Shop';
 import About from './components/about/About';
 import OneProduct from './components/details/OneProduct';
 import CreateProduct from './components/car-create/CreateProduct';
+import EditProduct from './components/car-edit/EditProduct';
 import Register from './components/register/Register';
 import Login from './components/login/Login';
 import Logout from './components/logout/logout';
 import NotFound from './components/notFound/NotFound';
+import ErrorBoundary from './components/ErrorBoundary';
+import AuthenticationGuard from './components/guards/AuthenticationGuard';
 
 function App() {
   return (
@@ -56,7 +59,4 @@ import './assets/css/templatemo.min.css';
 import './assets/css/errorPage.css';
 import './assets/css/login.css';
 import './assets/css/register.css';
-import EditProduct from './components/car-edit/EditProduct';
-import ErrorBoundary from './components/ErrorBoundary';
-import AuthenticationGuard from './components/guards/AuthenticationGuard';
 

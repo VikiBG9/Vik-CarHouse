@@ -30,27 +30,27 @@ export default function CreateProduct() {
               <div className="user-details">
                 <div className="input-box">
                   <span className="details">Марка на кола:</span>
-                  <input type="text" id="brand" name="brand" placeholder="Въведи марка..."/>
+                  <input type="text" id="brand" name="brand" required placeholder="Въведи марка..."/>
                 </div>
                 <div className="input-box">
                   <span className="details">Модел на кола:</span>
-                  <input type="text" id="model" name="model" placeholder="Въведи модел..."/>
+                  <input type="text" id="model" name="model" required placeholder="Въведи модел..."/>
                 </div>
                 <div className="input-box">
                   <span className="details">Година на производство:</span>
-                  <input type="number" id="year" name="year" min="1886" placeholder="Въведи година..."/>
+                  <input type="number" id="year" name="year" min="1886" required placeholder="Въведи година..."/>
                 </div>
                 <div className="input-box">
                   <span className="details">Сума $:</span>
-                  <input type="number" id="price" name="price" placeholder="Въведи пари..."/>
+                  <input type="number" id="price" name="price" required placeholder="Въведи пари..."/>
                 </div>
                 <div className="input-box">
                   <span className="details">Описание:</span>
-                  <input type="text" id="description" name="description" placeholder="Напиши описание..."/>
+                  <input type="text" id="description" name="description" required placeholder="Напиши описание..."/>
                 </div>
                 <div className="input-box">
                   <span className="details">Снимка:</span>
-                  <input type="text" id="imageUrl" name="imageUrl" placeholder="Сложи снимка..."/>
+                  <input type="text" id="imageUrl" name="imageUrl" required placeholder="Сложи снимка..."/>
                 </div>
               </div>
               <div className="reg-button">
