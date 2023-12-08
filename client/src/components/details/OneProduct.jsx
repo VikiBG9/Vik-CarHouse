@@ -1,17 +1,19 @@
 import '../../assets/css/custom.css';
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { useContext, useEffect, useMemo, useReducer, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom"
 import * as carService from '../../services/carService';
 import * as commentService from '../../services/commentService';
 import AuthContext from '../../contexts/authContext';
+import reducer from './commentReducer';
+import { useForm } from '../../hooks/useForm';
+import Path from '../../paths/paths';
+import { pathToUrl } from '../../utills/pathUtills';
 
 export default function OneProduct() {
-  const { email } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { email, userId } = useContext(AuthContext);
   const [car, setCar] = useState({});
-  const [comments, setComments] = useState([]);
-  const [clearFormData, setClearFormData] = useState({
-    comment: "",
-  });
+  const [comments, dispatch] = useReducer(reducer, []);
   const { carId } = useParams();
 
   useEffect(() => {
@@ -19,33 +21,43 @@ export default function OneProduct() {
       .then(setCar);
 
     commentService.getAll(carId)
-      .then(setComments);
+      .then((result) => {
+        dispatch({
+          type: 'GET_ALL_COMMENTS',
+          payload: result,
+        });
+      });
   }, [carId]);
 
-  const addCommentHandler = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-
+  const addCommentHandler = async (values) => {
     const newComment = await commentService.create(
       carId,
-      formData.get('comment'),
+      values.comment,
     );
-    console.log(email);
-    setComments(state => [...state, { ...newComment, owner: { email } }]);  
 
-    setClearFormData({
-      comment: "",
+    newComment.owner = { email };
+
+    dispatch({
+      type: 'ADD_COMMENT',
+      payload: newComment,
     });
+
+    onChange({ target: { name: 'comment', value: '' } });
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setClearFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const deleteBtnClickHandler = async () => {
+    const confirmedMessage= confirm(`Сигурен ли си, че искаш да закупиш ${car.brand} ${car.model}?`);
+
+    if (confirmedMessage) {
+      await carService.remove(carId);
+
+      navigate('/shop');
+    }
+  }
+  
+  const { values, onChange, onSubmit } = useForm(addCommentHandler, {
+    comment: '',
+  });
 
   return (
     <>
@@ -74,6 +86,7 @@ export default function OneProduct() {
                   {comments.length === 0 && (
                     <p>No comments.</p>
                   )}
+                  
                 </form>
               </div>
             </div>
@@ -118,33 +131,26 @@ export default function OneProduct() {
                   <p>
                     {car.description}
                   </p>
-                  <form action="" method="GET">
-                    <div className="row pb-3">
-                      <div className="col d-grid">
-                        <button
-                          type="submit"
-                          className="btn btn-success btn-lg"
-                          name="submit"
-                          value="buy"
-                        >
-                          Купи
-                        </button>
-                      </div>
+                  {userId === car._ownerId && (
+                    <div className="col d-grid">
+                      <hr />
+                      <button className="btn btn-success btn-lg" onClick={deleteBtnClickHandler}>Купи</button><br />
+                      <Link to={pathToUrl(Path.Edit, { carId })} className="btn btn-success btn-lg">Промяна на данни</Link>
                     </div>
-                  </form>
+                  )}
                 </div>
               </div>
               <br></br>
               <div className="card">
-                <form className="comments" onSubmit={addCommentHandler}><br />
+                <form className="comments" onSubmit={onSubmit}><br />
                   <div>
                     <h4>Остави коментар:</h4>
                     <textarea
                       className="commentsTextArea"
                       name="comment"
                       placeholder="Коментар..."
-                      value={clearFormData.comment}
-                      onChange={handleInputChange}
+                      value={values.comment}
+                      onChange={onChange}
                     ></textarea>
                   </div><br />
                   <div>

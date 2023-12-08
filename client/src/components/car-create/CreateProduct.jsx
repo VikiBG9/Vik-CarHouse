@@ -9,7 +9,8 @@ export default function CreateProduct() {
     const createCar = async (e) => {
         e.preventDefault();
 
-        const carData = Object.fromEntries(new FormData(e.currentTarget))
+        const carData = Object.fromEntries(new FormData(e.currentTarget));
+
         try {
             await carService.create(carData);
 
@@ -23,7 +24,7 @@ export default function CreateProduct() {
     return (
       <div className="reg-bod">
         <div className="reg-container">
-          <div className="reg-title">Вкарайте кола в сервиза</div>
+          <div><h4>Вкарайте кола в сервиза</h4></div>
           <div className="content">
             <form id="create " onSubmit={createCar}>
               <div className="user-details">

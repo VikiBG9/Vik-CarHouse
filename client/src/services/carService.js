@@ -19,3 +19,11 @@ export const create = async (carData) => {
     
     return result;
 };
+
+export const edit = async (carId, carData) => {
+    const result = await request.put(`${baseUrl}/${carId}`, carData);
+    
+    return result;
+};
+
+export const remove = async (carId) => request.remove(`${baseUrl}/${carId}`);

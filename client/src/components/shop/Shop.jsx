@@ -8,7 +8,10 @@ export default function Shop() {
 
     useEffect(() => {
         carService.getAll()
-            .then(result => setCars(result));
+            .then(result => setCars(result))
+            .catch(err => {
+                console.log(err);
+            })
     }, []);
 
     console.log(cars);
@@ -36,11 +39,12 @@ export default function Shop() {
                 <div className="row">
                     <div className="col-lg-9">
                         <div className="row">
+                            <h1>Изложба на коли:</h1>
                             {cars.map(car => (
                                 <ShopItem key={car._id} {...car} />
                             ))}
                             {cars.length === 0 && (
-                                <h3>No cars yet</h3>
+                                <h3>Няма налични коли.</h3>
                             )}
                         </div>
                     </div>
