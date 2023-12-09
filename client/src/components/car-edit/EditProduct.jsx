@@ -33,7 +33,6 @@ export default function EditProduct() {
 
             navigate('/shop');
         } catch (err) {
-            //Error notification
             console.log(err);
         }
     };

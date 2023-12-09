@@ -3,7 +3,6 @@ import * as authService from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import Path from "../paths/paths";
 
-//TODO: Error messages and validation
 const AuthContext = createContext();
 
 AuthContext.displayName = 'AuthContext';
@@ -23,23 +22,22 @@ export const AuthProvider = ({
       const result = await authService.login(values.email, values.password);
 
       setAuth(result);
-      //TODO: TRY CATCH if its not valid login(some kind of message)
+      
       localStorage.setItem('accessToken', result.accessToken);
 
       navigate(Path.Home);
   };
 
   const registerSubmitHandler = async (values) => {
-   
       const result = await authService.register(values.email, values.password);
 
       setAuth(result);
-      //TODO: TRY CATCH if its not valid login(some kind of message)
+
       localStorage.setItem('accessToken', result.accessToken);
+      
       navigate(Path.Home);
     
   };
-
 
   const logoutHandler = () => {
     setAuth({});

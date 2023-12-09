@@ -1,5 +1,5 @@
 import '../../assets/css/custom.css';
-import { useContext, useEffect, useMemo, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom"
 import * as carService from '../../services/carService';
 import * as commentService from '../../services/commentService';

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 import * as carService from "../../services/carService";
 
-
 export default function CreateProduct() {
     const navigate = useNavigate();
 
@@ -16,7 +15,6 @@ export default function CreateProduct() {
 
             navigate('/shop');
         } catch (err) {
-            //Error notification
             console.log(err);
         }
     }
